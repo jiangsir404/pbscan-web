@@ -1,4 +1,4 @@
-<?php /*a:1:{s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\index\login.html";i:1546851678;}*/ ?>
+<?php /*a:1:{s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\index\login.html";i:1546916458;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -69,12 +69,12 @@
                 dataType:'json',
                 success:function (data) {
                     if (data.code == 1) {
-                        layer.msg(data.msg, {
-                            icon:6,
-                            time:2000
-                        }, function () {
-                            location.href = data.url;
-                        });
+                        location.href = data.url;
+                        // layer.msg(data.msg, {
+                        //     icon:6
+                        // }, function () {
+                        //     location.href = data.url;
+                        // });
                     }else {
                         layer.open({
                             title:'登录失败',

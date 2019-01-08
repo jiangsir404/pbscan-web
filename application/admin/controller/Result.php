@@ -8,13 +8,13 @@ class Result extends Base
 {
     //显示
     public function index(){
-        $result = db('results')->order('id','asc')->paginate(10);
+        $result = db('results')->order('id','asc')->paginate(30);
         $this->assign('results',$result);
         return view();
     }
 
     public function history(){
-        $requests = db('requests')->order('id','asc')->paginate(10);
+        $requests = db('requests')->order('id','asc')->paginate(30);
         $this->assign('requests',$requests);
         return view();
     }

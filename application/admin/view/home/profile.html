@@ -126,25 +126,7 @@
 </div>
 
 {include file="public/_js" /}
-<script>
-    function GetUploadify(num,elementid,path,callback,fileType)
-    {
-        var upurl ='/admin/home/upload?num='+num+'&input='+elementid+'&path='+path+'&func='+callback+'&fileType='+fileType;
-        var title = '上传图片';
-        if(fileType == 'Flash'){
-            title = '上传视频';
-        }
-        layer.open({
-            type: 2,
-            title: title,
-            shadeClose: true,
-            shade: false,
-            maxmin: true, //开启最大化最小化按钮
-            area: ['50%', '60%'],
-            content: upurl
-        });
-    }
-</script>
+
 
 </body>
 <!--  /Body -->

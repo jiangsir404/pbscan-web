@@ -1,4 +1,4 @@
-<?php /*a:4:{s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\home\index.html";i:1546851695;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_head.html";i:1546854924;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_left.html";i:1546851568;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1543071388;}*/ ?>
+<?php /*a:4:{s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\home\index.html";i:1546851695;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_head.html";i:1546854924;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_left.html";i:1546851568;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546916550;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -272,7 +272,7 @@
             success:function(data){
                 layer.msg(data.msg,{
                     icon:6,
-                    time:2000
+                    time:100
                 },function(){
                     location.href=data.url;
                 });

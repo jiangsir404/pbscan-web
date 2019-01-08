@@ -16,6 +16,7 @@ class Home extends Base
     {
 
         $token = session('admin.token');
+        #var_dump(session('admin'));
         $this->assign('token',$token);
         return view();
     }

@@ -35,11 +35,11 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>rid</th>
-                                        <th>status</th>
-                                        <th>request_num</th>
-                                        <th>issues_num</th>
-                                        <th>insert_point</th>
+                                        <th>漏洞url</th>
+                                        <th>状态</th>
+                                        <th>发包数</th>
+                                        <th>漏洞数</th>
+                                        <th>污染点</th>
                                         <th>漏洞报告</th>
                                         <th>扫描时间</th>
                                         <th>操作</th>
@@ -50,13 +50,13 @@
                                     {if session('admin.token') == $vo.token}
                                     <tr>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.id}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.rid}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.scanUrl}</td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.status}</td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.request_num}</td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.issues_num}</td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.insert_point}</td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.scanTime}</td>
-                                        <td><a href="#delProject" data-id="{$vo.rid}">删除</a></td>
+                                        <td><a href="#delProject" data-id="{$vo.rid}" data-file="{$vo.saveFile}">删除</a></td>
                                     </tr>
 
                                     <div id="demo" class="collapse">
@@ -108,21 +108,25 @@
 <script>
     $("tbody tr td:not(:last)").click(function(){
         var rid = $(this).parent().find("td:last a").attr("data-id");
-
+        var saveFile = $(this).parent().find("td:last a").attr("data-file");
         $.ajax({
             url:'http://localhost:84/admin/result/issue?rid='+rid,
             dataType:'json',
             success:function(data,status){
                 if(status == "success"){
-                    htmldata = '';
+                    htmldata = '\
+                <p>\
+                    <b><span>漏洞rid：</span></b>\
+                    <span>'+rid+'</span>\
+                </p>\
+                <p>\
+                    <b><span>漏洞报表：</span></b>\
+                    <span>'+saveFile+'</span>\
+                </p>';
                     results = JSON.parse(data);
                     for(i in results){
                         json = results[i]
                         htmldata += '\
-				<p>\
-					<b><span>漏洞rid：</span></b>\
-					<span>'+json.rid+'</span>\
-				</p>\
 				<p>\
 					<b><span>漏洞名称：</span></b>\
 					<span><font color="#FF0000">'+json.issueName+'</font></span>\
@@ -137,7 +141,7 @@
 				</p>\
 				<p>\
 					<b><span>漏洞Url：</span></b>\
-					<span>'+json.issueUrl+'</span>\
+					<span>'+json.issueUrl.replace(/\r\n/g,"<br/>")+'</span>\
 				</p>\
 				<p>\
 					<b><span>漏洞细节：</span></b>\

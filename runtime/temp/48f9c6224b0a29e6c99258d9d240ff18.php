@@ -1,4 +1,4 @@
-<?php /*a:4:{s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\result\index.html";i:1546868679;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_head.html";i:1546854924;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_left.html";i:1546851568;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1543071388;}*/ ?>
+<?php /*a:4:{s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\result\index.html";i:1546878402;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_head.html";i:1546854924;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_left.html";i:1546851568;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546916550;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -214,12 +214,13 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>rid</th>
-                                        <th>status</th>
-                                        <th>request_num</th>
-                                        <th>issues_num</th>
-                                        <th>insert_point</th>
-                                        <th>scanTime</th>
+                                        <th>漏洞url</th>
+                                        <th>状态</th>
+                                        <th>发包数</th>
+                                        <th>漏洞数</th>
+                                        <th>污染点</th>
+                                        <th>漏洞报告</th>
+                                        <th>扫描时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -227,13 +228,13 @@
                                     <?php if(is_array($results) || $results instanceof \think\Collection || $results instanceof \think\Paginator): $i = 0; $__LIST__ = $results;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(session('admin.token') == $vo['token']): ?>
                                     <tr>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['id']); ?></td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['rid']); ?></td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['scanUrl']); ?></td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['status']); ?></td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['request_num']); ?></td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['issues_num']); ?></td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['insert_point']); ?></td>
                                         <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['scanTime']); ?></td>
-                                        <td><a href="#delProject" data-id="<?php echo htmlentities($vo['rid']); ?>">删除</a></td>
+                                        <td><a href="#delProject" data-id="<?php echo htmlentities($vo['rid']); ?>" data-file="<?php echo htmlentities($vo['saveFile']); ?>">删除</a></td>
                                     </tr>
 
                                     <div id="demo" class="collapse">
@@ -309,7 +310,7 @@
             success:function(data){
                 layer.msg(data.msg,{
                     icon:6,
-                    time:2000
+                    time:100
                 },function(){
                     location.href=data.url;
                 });
@@ -320,21 +321,25 @@
 <script>
     $("tbody tr td:not(:last)").click(function(){
         var rid = $(this).parent().find("td:last a").attr("data-id");
-
+        var saveFile = $(this).parent().find("td:last a").attr("data-file");
         $.ajax({
             url:'http://localhost:84/admin/result/issue?rid='+rid,
             dataType:'json',
             success:function(data,status){
                 if(status == "success"){
-                    htmldata = '';
+                    htmldata = '\
+                <p>\
+                    <b><span>漏洞rid：</span></b>\
+                    <span>'+rid+'</span>\
+                </p>\
+                <p>\
+                    <b><span>漏洞报表：</span></b>\
+                    <span>'+saveFile+'</span>\
+                </p>';
                     results = JSON.parse(data);
                     for(i in results){
                         json = results[i]
                         htmldata += '\
-				<p>\
-					<b><span>漏洞rid：</span></b>\
-					<span>'+json.rid+'</span>\
-				</p>\
 				<p>\
 					<b><span>漏洞名称：</span></b>\
 					<span><font color="#FF0000">'+json.issueName+'</font></span>\
@@ -346,6 +351,10 @@
 				<p>\
 					<b><span>漏洞可信度：</span></b>\
 					<span>'+json.issueConfidence+'</span>\
+				</p>\
+				<p>\
+					<b><span>漏洞Url：</span></b>\
+					<span>'+json.issueUrl.replace(/\r\n/g,"<br/>")+'</span>\
 				</p>\
 				<p>\
 					<b><span>漏洞细节：</span></b>\
