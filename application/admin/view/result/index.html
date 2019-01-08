@@ -1,83 +1,51 @@
-{include file="public/_head" /}
-<!-- Main Container -->
-<div class="main-container container-fluid">
-    <!-- Page Container -->
-    <div class="page-container">
+{include file="public/_meta" /}
+{include file="public/_nav" /}
 
-        <!-- Page Sidebar -->
-        {include file="public/_left" /}
-        <!-- /Page Sidebar -->
-        <!-- Page Content -->
-        <div class="page-content">
-            <!-- Page Breadcrumb -->
-            <div class="page-breadcrumbs">
-                <ul class="breadcrumb">
-                    <li class="active">
-                        <i class="fa fa-home"></i>&nbsp;漏洞管理
-                    </li>
-                    <li>栏目列表</li>
-                </ul>
-            </div>
-            <!-- /Page Breadcrumb -->
-            <!-- Page Body -->
-            <div class="page-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="widget">
-                            <div class="widget-header">
-                                <span class="widget-caption">漏洞列表</span>
-                                <div class="widget-buttons">
-                                    {$results->render()|raw}
-                                </div>
-                            </div>
-                            <div class="widget-body">
-                                <table class="table table-hover table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>漏洞url</th>
-                                        <th>状态</th>
-                                        <th>发包数</th>
-                                        <th>漏洞数</th>
-                                        <th>污染点</th>
-                                        <th>漏洞报告</th>
-                                        <th>扫描时间</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {volist name="results" id="vo"}
-                                    {if session('admin.token') == $vo.token}
-                                    <tr>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.id}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.scanUrl}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.status}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.request_num}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.issues_num}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.insert_point}</td>
-                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.scanTime}</td>
-                                        <td><a href="#delProject" data-id="{$vo.rid}" data-file="{$vo.saveFile}">删除</a></td>
-                                    </tr>
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="{:url('/admin/result/index')}">漏洞管理</a></li>
+            <li><a href="{:url('/admin/result/history')}">扫描历史</a></li>
+        </ol>
+            <h2>漏洞列表</h2>
+            <table class="table table-bordered table-hover table-striped">
+                <caption>{if condition="$results->count() gt 0"}共计{$results->count()}条{else /}无数据{/if}</caption>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>漏洞url</th>
+                    <th>状态</th>
+                    <th>发包数</th>
+                    <th>漏洞数</th>
+                    <th>污染点</th>
+                    <th>扫描时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="results" id="vo"}
+                {if session('admin.token') == $vo.token}
+                <tr>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.id}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg" width="30px">{$vo.scanUrl}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.status}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.request_num}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.issues_num}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.insert_point}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.scanTime}</td>
+                    <td><a href="/admin/result/delete?rid={$vo.rid}" data-id="{$vo.rid}" data-file="{$vo.saveFile}">删除</a></td>
+                </tr>
 
-                                    <div id="demo" class="collapse">
-                                        This is for test
-                                    </div>
-                                    {/if}
-                                    {/volist}
-                                    </tbody>
-                                </table>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Page Body -->
-        </div>
-        <!-- /Page Content -->
-
+                {/if}
+                {/volist}
+                </tbody>
+            </table>
+            <nav>
+                {$results->render()|raw}
+            </nav>
     </div>
+</div>
+
     <!-- /Page Container -->
     <!-- Main Container -->
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -95,13 +63,7 @@
             </div>
         </div>
     </div>
-</div>
 
-<!--<div>-->
-    <!--<p><b><span>漏洞id：</span></b><i>'+json.id+'</i></p>-->
-    <!--<p><b><span>漏洞rid：</span></b><i>'+json.rid+'</i></p>-->
-    <!--<p></p>-->
-<!--</div>-->
 
 
 {include file="public/_js" /}
@@ -154,12 +116,9 @@
         });
         });
 </script>
-</body>
-<!--  /Body -->
-</html>
 
-<!--<p>\-->
-    <!--<span class="iconfont">&#xe601;</span>\-->
-    <!--<b><span>请求包：</span></b>\-->
-    <!--<span>'+"<br/>"+json.issueRequest.replace(/\r\n/g,"<br/>")+'</span>\-->
-<!--</p>\-->
+{include file="public/_footer" /}
+
+{include file="public/_js" /}
+</body>
+</html>

@@ -1,71 +1,42 @@
-{include file="public/_head" /}
+{include file="public/_meta" /}
+{include file="public/_nav" /}
 <!-- /Navbar -->
 <!-- Main Container -->
-<div class="main-container container-fluid">
-    <!-- Page Container -->
-    <div class="page-container">
 
-        <!-- Page Sidebar -->
-        {include file="public/_left" /}
-        <!-- /Page Sidebar -->
-        <!-- Page Content -->
-        <div class="page-content">
-            <!-- Page Breadcrumb -->
-            <div class="page-breadcrumbs">
-                <ul class="breadcrumb">
-                    <li class="active">
-                        <i class="fa fa-home"></i>&nbsp;控制面板
-                    </li>
-                </ul>
+<div class="container admin-body">
+    <div class="row">
+            <div class="content col-xs-8 col-xs-offset-2">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th colspan="2">基本信息</th>
+                        </tr>
+                        </thead>
+                        <tbody>、
+                        <tr>
+                            <td>我的token</td>
+                            <td>{$token}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器域名</td>
+                            <td>{$Request.domain}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器IP地址</td>
+                            <td>{$Request.ip}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器端口</td>
+                            <td>{$Request.port}</td>
+                        </tr>
+                        </tbody>
+                    </table>
             </div>
-            <!-- /Page Breadcrumb -->
-            <!-- Page Body -->
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="well with-header with-footer">
-                            <div class="header bg-themeprimary">
-                                服务器信息
-                            </div>
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th colspan="2">基本信息</th>
-                                </tr>
-                                </thead>
-                                <tbody>、
-                                <tr>
-                                    <td>我的token</td>
-                                    <td>{$token}</td>
-                                </tr>
-                                <tr>
-                                    <td>服务器域名</td>
-                                    <td>{$Request.domain}</td>
-                                </tr>
-                                <tr>
-                                    <td>服务器IP地址</td>
-                                    <td>{$Request.ip}</td>
-                                </tr>
-                                <tr>
-                                    <td>服务器端口</td>
-                                    <td>{$Request.port}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Page Body -->
-        <!-- /Page Content -->
-
     </div>
-    <!-- /Page Container -->
-    <!-- Main Container -->
-
 </div>
+
+{include file="public/_footer" /}
 
 {include file="public/_js" /}
 </body>
-<!--  /Body -->
 </html>

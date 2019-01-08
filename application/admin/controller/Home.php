@@ -24,7 +24,7 @@ class Home extends Base
     public function logout()
     {
         session(null);
-        $this->success('退出成功','/admin/index/login');
+        $this->success('退出成功','/admin/index/login','','1');
     }
 
     public function profile()
@@ -32,25 +32,8 @@ class Home extends Base
         return view();
     }
 
-    public function upload()
-    {
-        $files = request()->file('file');
-        #var_dump($file);
-        foreach($files as $file){
-            $info = $file->validate(['ext'=>'jpg,png,gif'])->move('uploads/');
-            if($info){
-                echo $info->getSaveName();
-                $this->success('上传成功','/admin/home/profile',1000);
-            }else{
-                echo $file->getError();
-                $this->error($file->getError());
-            }
-        }
+    public function token(){
+        return view();
     }
 
-    public function generateToken($length=20){
-        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $randomStr= substr(str_shuffle($letters),0,$length);
-        return md5($randomStr);
-    }
 }

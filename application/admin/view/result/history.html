@@ -1,74 +1,43 @@
-{include file="public/_head" /}
-<!-- Main Container -->
-<div class="main-container container-fluid">
-    <!-- Page Container -->
-    <div class="page-container">
+{include file="public/_meta" /}
+{include file="public/_nav" /}
 
-        <!-- Page Sidebar -->
-        {include file="public/_left" /}
-        <!-- /Page Sidebar -->
-        <!-- Page Content -->
-        <div class="page-content">
-            <!-- Page Breadcrumb -->
-            <div class="page-breadcrumbs">
-                <ul class="breadcrumb">
-                    <li class="active">
-                        <i class="fa fa-home"></i>&nbsp;漏洞管理
-                    </li>
-                    <li>栏目列表</li>
-                </ul>
-            </div>
-            <!-- /Page Breadcrumb -->
-            <!-- Page Body -->
-            <div class="page-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="widget">
-                            <div class="widget-header">
-                                <span class="widget-caption">扫描列表</span>
-                                <div class="widget-buttons">
-                                    {$requests->render()|raw}
-                                </div>
-                            </div>
-                            <div class="widget-body">
-                                <table class="table table-hover table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>url</th>
-                                        <th>scan_burp</th>
-                                        <th>result_burp</th>
-                                        <th>update_time</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {volist name="requests" id="vo"}
-                                    
-                                    {if session('admin.token') == $vo.token}
-                                    <tr>
-                                        <td>{$vo.id}</td>
-                                        <td>{$vo.method}  {$vo.host}:{$vo.port}{$vo.path}</td>
-                                        <td>{$vo.scan_burp}</td>
-                                        <td>{$vo.result_burp}</td>
-                                        <td>{$vo.update_time}</td>
-                                    </tr>
-                                    {/if}
-                                    {/volist}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Page Body -->
-        </div>
-        <!-- /Page Content -->
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="{:url('/admin/result/index')}">漏洞管理</a></li>
+            <li><a href="{:url('/admin/result/history')}">扫描历史</a></li>
+        </ol>
+        <h2>漏洞管理</h2>
+        <table class="table table-hover table-bordered">
+            <caption>{if condition="$requests->count() gt 0"}共计{$requests->count()}条{else /}无数据{/if}</caption>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>url</th>
+                <th>scan_burp</th>
+                <th>result_burp</th>
+                <th>update_time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="requests" id="vo"}
 
+            {if session('admin.token') == $vo.token}
+            <tr>
+                <td>{$vo.id}</td>
+                <td width="100px">{$vo.method}  {$vo.host}:{$vo.port}{$vo.path}</td>
+                <td>{$vo.scan_burp}</td>
+                <td>{$vo.result_burp}</td>
+                <td>{$vo.update_time}</td>
+            </tr>
+            {/if}
+            {/volist}
+            </tbody>
+        </table>
+        <nav>
+            {$requests->render()|raw}
+        </nav>
     </div>
-    <!-- /Page Container -->
-    <!-- Main Container -->
-
 </div>
 
 {include file="public/_js" /}

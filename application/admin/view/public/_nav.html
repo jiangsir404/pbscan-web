@@ -1,0 +1,39 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>pbscan管理后台</title>
+    <link rel="shortcut icon" href="/static/admin/images/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/static/admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/admin/css/main.css">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Pbscan</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{:url('admin/home/index')}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li><a href="{:url('admin/result/index')}"><span class="glyphicon glyphicon-eye-open"></span> 漏洞管理</a></li>
+                <li><a href="{:url('admin/result/history')}"><span class="glyphicon glyphicon-globe"></span> 扫描历史</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> {:session('admin.username')}</a></li>
+                <li><a href="{:url('admin/home/logout')}"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
