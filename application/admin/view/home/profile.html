@@ -1,0 +1,151 @@
+{include file="public/_head" /}
+<!-- /Navbar -->
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/_left" /}
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                    </li>
+                    <li class="active">Profile</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+            <!-- Page Header -->
+            <div class="page-header position-relative">
+                <div class="header-title">
+                    <h1>
+                        User Profile
+                    </h1>
+                </div>
+                <!--Header Buttons-->
+                <div class="header-buttons">
+                    <a class="sidebar-toggler" href="#">
+                        <i class="fa fa-arrows-h"></i>
+                    </a>
+                    <a class="refresh" id="refresh-toggler" href="">
+                        <i class="glyphicon glyphicon-refresh"></i>
+                    </a>
+                    <a class="fullscreen" id="fullscreen-toggler" href="#">
+                        <i class="glyphicon glyphicon-fullscreen"></i>
+                    </a>
+                </div>
+                <!--Header Buttons End-->
+            </div>
+            <!-- /Page Header -->
+            <!-- Page Body -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="profile-container">
+                            <div class="profile-header row">
+                                <div class="col-lg-2 col-md-4 col-sm-12 text-center">
+                                    <img src="assets/img/avatars/divyia.jpg" alt="" class="header-avatar" />
+                                </div>
+                                <div class="col-lg-5 col-md-8 col-sm-12 profile-info">
+                                    <div class="header-fullname">Admin</div>
+                                    <a href="#" class="btn btn-palegreen btn-sm  btn-follow">
+                                        <i class="fa fa-check"></i>
+                                        Following
+                                    </a>
+                                    <div class="header-information">
+                                         图片上传:
+                                        <div class="container col-xs-8 col-xs-offset-2">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <img src="/uploads/profile.jpg">
+                                                </div>
+                                            </div>
+                                            <form action="/admin/home/upload" method="post" enctype="multipart/form-data">
+                                                <input type="file" name="file[]">
+                                                <input type="file" name="file[]">
+                                                <input type="submit" name="submit" value="submit" class="btn btn-success">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="profile-body">
+                                <div class="col-lg-12">
+                                    <div class="tabbable">
+                                        <div id="settings" class="tab-pane">
+                                            <form role="form">
+                                                <div class="form-title">
+                                                    Personal Information
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                                <span class="input-icon icon-right">
+                                                                    <input type="text" class="form-control" placeholder="Name">
+                                                                    <i class="fa fa-user blue"></i>
+                                                                </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                                <span class="input-icon icon-right">
+                                                                    <input type="text" class="form-control" placeholder="Family">
+                                                                    <i class="fa fa-user orange"></i>
+                                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Save Profile</button>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Body -->
+        </div>
+        <!-- /Page Content -->
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>
+
+{include file="public/_js" /}
+<script>
+    function GetUploadify(num,elementid,path,callback,fileType)
+    {
+        var upurl ='/admin/home/upload?num='+num+'&input='+elementid+'&path='+path+'&func='+callback+'&fileType='+fileType;
+        var title = '上传图片';
+        if(fileType == 'Flash'){
+            title = '上传视频';
+        }
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['50%', '60%'],
+            content: upurl
+        });
+    }
+</script>
+
+</body>
+<!--  /Body -->
+</html>

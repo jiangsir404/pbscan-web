@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="nMask tools">
+    <meta name="author" content="nMask">
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+    <title>{block name="title"}nMask's Tool - 风凌渡口{/block}</title>
+
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index/">rivir-江sir</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav navbar-default">
+                <!--<li><a class="action" href="{% url 'index' %}">全部工具</a></li>-->
+                <!--<li><a href="{% url 'index' %}?tool_type=kf">开发类工具</a></li>-->
+                <!--<li><a href="{% url 'index' %}?tool_type=sec">安全类工具</a></li>-->
+                <!--<li><a href="{% url 'index' %}?tool_type=yw">运维类工具</a></li>-->
+                <li><a href="{:url('index/index/index')}">CTF类工具</a></li>
+                <li><a href="{:url('index/index/challenges')}">CTF平台</a></li>
+
+                <form action="/search/" class="navbar-form navbar-left" role="search" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="toolname" placeholder="Search工具">
+                        <button type="submit" class="btn btn-default">提交</button>
+                    </div>
+
+                </form>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://www.blogsir.com.cn" target="_blank">技术博客</a></li>
+                <li><a href="/admin/index/login">后台</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 模态框（Modal） -->
+{block name="modal"}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    友情提醒一下
+                </h4>
+            </div>
+            <div class="modal-body">
+                非常抱歉，亲！～ 此工具暂未对外开放，请耐心等待，也可留言反馈，多谢您的支持！
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+<!-- 内容 -->
+{block name="content"}
+
+<br>
+<div class="container col-xs-8 col-xs-offset-2">
+    <div class="row">
+        {volist name="tools_list" id="vo"}
+        <div class="col-xs-4">
+            <div class="list-group">
+
+                <a href="{$vo.link}" data-toggle="modal" data-target="{$vo.link}" class="list-group-item btn btn-success">
+                    <h4 class="list-group-item-heading">{$vo.title}</h4>
+                </a>
+                <form class="list-group-item">
+                    <a id="{$vo.hits}" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>点赞</a>
+                    ：<span id="hits">{$vo.hits}</span>&nbsp;&nbsp;&nbsp;&nbsp;工具类别：
+                    <a href="{% url 'index' %}?tool_type={{i.5}}">{$vo.category}</a>
+                </form>
+                <p class="list-group-item">{$vo.content}</p>
+                <p class="list-group-item"><a class="btn btn-success" data-toggle="modal" data-target="{{i.3}}" href="{$vo.link}" role="button">进入详览</a>&nbsp;&nbsp;上线时间：{$vo.update_time}</p>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $("#hits").click(function(){
+                    $.post("/index/index/addhits",{'hits':""}, function(ret){
+                        $('#hits').html(ret)
+                    })
+                });
+
+            });
+        </script>
+        {/volist}
+    </div>
+</div>
+{/block}
+
+
+{block name="fenye"}
+<!-- 分页 -->
+<div class="container">
+    {$tools_list->render()|raw}
+</div>
+{/block}
+
+{block name="comment"}
+{/block}
+
+<div class="container">
+	<span class="help-block">
+		{block name="down"}{/block}
+	</span>
+</div>
+
+<br><br><br>
+<!-- 底部版权说明 -->
+<div class="container">
+    <footer class="navbar-fixed-bottom">
+        <hr>
+        <div align="center">
+            <p><font size="4">&copy; 2018 by rivir-江sir</font></p>
+        </div>
+    </footer>
+</div>
+
+<!-- 底部加载js -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

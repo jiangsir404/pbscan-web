@@ -1,0 +1,161 @@
+{include file="public/_head" /}
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <!-- Page Sidebar -->
+        {include file="public/_left" /}
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-home"></i>&nbsp;漏洞管理
+                    </li>
+                    <li>栏目列表</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+            <!-- Page Body -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header">
+                                <span class="widget-caption">漏洞列表</span>
+                                <div class="widget-buttons">
+                                    {$results->render()|raw}
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>rid</th>
+                                        <th>status</th>
+                                        <th>request_num</th>
+                                        <th>issues_num</th>
+                                        <th>insert_point</th>
+                                        <th>漏洞报告</th>
+                                        <th>扫描时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="results" id="vo"}
+                                    {if session('admin.token') == $vo.token}
+                                    <tr>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.id}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.rid}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.status}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.request_num}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.issues_num}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.insert_point}</td>
+                                        <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.scanTime}</td>
+                                        <td><a href="#delProject" data-id="{$vo.rid}">删除</a></td>
+                                    </tr>
+
+                                    <div id="demo" class="collapse">
+                                        This is for test
+                                    </div>
+                                    {/if}
+                                    {/volist}
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Body -->
+        </div>
+        <!-- /Page Content -->
+
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">漏洞详情</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div>-->
+    <!--<p><b><span>漏洞id：</span></b><i>'+json.id+'</i></p>-->
+    <!--<p><b><span>漏洞rid：</span></b><i>'+json.rid+'</i></p>-->
+    <!--<p></p>-->
+<!--</div>-->
+
+
+{include file="public/_js" /}
+<script>
+    $("tbody tr td:not(:last)").click(function(){
+        var rid = $(this).parent().find("td:last a").attr("data-id");
+
+        $.ajax({
+            url:'http://localhost:84/admin/result/issue?rid='+rid,
+            dataType:'json',
+            success:function(data,status){
+                if(status == "success"){
+                    htmldata = '';
+                    results = JSON.parse(data);
+                    for(i in results){
+                        json = results[i]
+                        htmldata += '\
+				<p>\
+					<b><span>漏洞rid：</span></b>\
+					<span>'+json.rid+'</span>\
+				</p>\
+				<p>\
+					<b><span>漏洞名称：</span></b>\
+					<span><font color="#FF0000">'+json.issueName+'</font></span>\
+				</p>\
+				<p>\
+					<b><span>漏洞等级：</span></b>\
+					<span>'+json.issueSeverity+'</span>\
+				</p>\
+				<p>\
+					<b><span>漏洞可信度：</span></b>\
+					<span>'+json.issueConfidence+'</span>\
+				</p>\
+				<p>\
+					<b><span>漏洞Url：</span></b>\
+					<span>'+json.issueUrl+'</span>\
+				</p>\
+				<p>\
+					<b><span>漏洞细节：</span></b>\
+					<span>'+json.issueDetail+'</span>\
+				</p>\
+			';
+                    $(".modal-body").html(htmldata)}
+                }
+            }
+        });
+        });
+</script>
+</body>
+<!--  /Body -->
+</html>
+
+<!--<p>\-->
+    <!--<span class="iconfont">&#xe601;</span>\-->
+    <!--<b><span>请求包：</span></b>\-->
+    <!--<span>'+"<br/>"+json.issueRequest.replace(/\r\n/g,"<br/>")+'</span>\-->
+<!--</p>\-->

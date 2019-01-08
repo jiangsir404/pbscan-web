@@ -1,0 +1,79 @@
+{extend name="./base_index" /}
+
+<!-- 功能网页的模版 -->
+{block name="modal"}
+{/block}
+
+{block name="fenye"}
+{/block}
+
+{block name="content"}
+
+<!-- 按钮点击事件  -->
+
+<div class="container">
+    <div class="row">
+        <!-- 表单 -->
+        <div class="col-md-7">
+            {block name="form"}
+            <form role="form">
+                <div class="form-group">
+                    <span class="help-block">{block name="span_text"}Base64编码{/block}</span><!--span text继承-->
+                    <textarea name="content" style="font-size:12pt;line-height:20pt" id="content" class="form-control" rows="20"></textarea>
+                </div>
+                {block name="form_button"} <!--form 按钮继承-->
+                <button class="btn btn-primary btn-sm" type="button" id='sub_encode'>base64编码</button>
+                <button class="btn btn-primary btn-sm" type="button" id='sub_decode'>base64解码</button>
+                {/block}
+            </form>
+            {/block}
+        </div>
+
+        <!-- 帮助信息  -->
+        <div class="col-md-4 col-md-offset-1">
+            <span class="help-block">帮助信息栏</span>
+            <hr>
+            {block name="help"}{/block} <!--帮助信息继承-->
+        </div>
+    </div>
+</div>
+<br>
+
+
+<!-- ajax -->
+
+<script>
+    $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+</script>
+
+{block name="ajax"} <!--ajax继承-->
+<script>
+    $(document).ready(function(){
+        $("#sub_encode").click(function(){
+            var content = $("#content").val();
+
+            $.post("{% url 'base64_ajax' %}",{'content':content,"type":"encode"}, function(ret){
+                document.getElementById('content').value = ret
+            })
+
+        });
+
+
+        $("#sub_decode").click(function(){
+            var content = $("#content").val();
+
+            $.post("{% url 'base64_ajax' %}",{'content':content,"type":"decode"}, function(ret){
+                document.getElementById('content').value = ret
+
+            })
+
+
+        });
+
+    });
+</script>
+{/block}
+
+{/block}

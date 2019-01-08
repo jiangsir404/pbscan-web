@@ -1,0 +1,34 @@
+create table challenges(
+id  int unsigned auto_increment key,
+title varchar(50) not null,
+description varchar(500) not null,
+tag  enum('web','pwn','stego','misc','crypto','forensics','other') DEFAULT 'other',
+submit_flag  int unsigned,
+flag varchar(30),
+score int(4) not null default 100,
+update_time varchar(30),
+content text default NULL,
+link varchar(50)
+) character set = utf8;
+
+
+create table teams(
+id   int unsigned auto_increment key,
+teamname varchar(20) not null,
+password char(32) not null,
+email varchar(50),
+score int(5) not null DEFAULT 0
+) character set = utf8;
+
+create table `submit_log`(
+`id` int(11) not null auto_increment key,
+`challenge_id` int(11) not null,
+`user_id` int(11) not null,
+`flag` varchar(64) not null,
+`submit_time` int(11) DEFAULT '0'
+) character set = utf8;
+
+
+insert into challenges values(NULL,'easy - function','一道非常简单的php 代码审计','web',0,'flag{EaSy_Php_HaHa}',100,now(),'所有代码都在题目中。<br/><br/>puzzle url: http://51.158.75.42:8087/','/home/challenge/index?id=1');
+
+insert into teams values(NULL,'七星','654321$$$','2461805286@qq.com',0);

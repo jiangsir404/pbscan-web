@@ -1,0 +1,47 @@
+{include file="module/card_head" /}
+
+
+    <div class="doc-wrapper">
+        <div class="container">
+            <div class="doc-header text-center">
+                <h1 class="doc-title">{$challenge.title}</h1>
+                <div class="meta">已解决次数:{$challenge.submit_flag}</div>
+            </div>
+            <div class="doc-body row">
+                <div class="doc-content col-8 offset-2"><p>分数:{$challenge.score}</p><p><br></p><p>content:{$challenge.content|raw}</p><p><br></p><p><br></p></div>
+            </div>
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <form method="post" class="form">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="0aGaIX5o5i5lZYrjA9y7fzpb9gqx1HLSfKPq8y2PgrK91LbwVVdfCxY8NMZkhqM9">
+                        <div class="form-group">
+                            <label for="id_flag">FLAG</label>
+                            <input type="text" name="flag" maxlength="250" class="form-control" placeholder="FLAG" title="" required id="id_flag">
+                        </div>
+
+                        <input type="hidden" name="puzzle" value="1" id="id_puzzle">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!--//page-wrapper-->
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?19dbfdba0233da257d1337485ec45b34";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>
+

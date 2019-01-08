@@ -1,0 +1,193 @@
+{include file="public/_head" /}
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <!-- Page Sidebar -->
+        {include file="public/_left" /}
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li class="active">
+                        <i class="fa fa-home"></i>&nbsp;栏目管理
+                    </li>
+                    <li>栏目列表</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+            <!-- Page Body -->
+            <div class="page-body">
+                <a href="/admin/admin/add" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>&nbsp;管理员添加</a>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header">
+                                <span class="widget-caption">管理员管理</span>
+                                <div class="widget-buttons">
+                                    {$admins->render()|raw}
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Token</th>
+                                        <th>用户名</th>
+                                        <th>邮箱</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="admins" id="vo"}
+                                    {if session('admin.id') == 1}
+                                    <tr>
+                                        <td>{$vo.id}</td>
+                                        <td>{$vo.token}</td>
+                                        <td>{$vo.username}</td>
+                                        <td>{$vo.email}</td>
+                                        <td>{if $vo.status == 1}
+                                            {if $vo.id == 1}超级管理员
+                                            {else /}普通管理员
+                                            {/if}
+                                            {else /}禁用
+                                            {/if}</td>
+                                        <td>
+                                            {if $vo.id != 1}
+                                            {if $vo.status == 0}
+                                            <a href="#" class="btn btn-success btn-xs admin-status" dataid="{$vo.id}" statusid="{$vo.status}">启用</a>
+                                            {else /}
+                                            <a href="#" class="btn btn-success btn-xs admin-status" dataid="{$vo.id}" statusid="{$vo.status}">禁用</a>
+                                            {/if}
+                                            {/if}
+                                            <!--<a href="{:url('/admin/admin/edit',['id'=>$vo.id])}" class="btn btn-azure btn-xs">编辑1</a>-->
+                                            {if $vo.id == 1}
+                                                <a href="#" class="btn btn-danger btn-xs">Forbidden</a>
+                                            {else /}
+                                            <a href="#" class="btn btn-danger btn-xs delete"  dataid="{$vo.id}">删除</a>
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    {else /}
+                                        {if $vo.id == session('admin.id') }
+                                            <tr>
+                                                <td>{$vo.id}</td>
+                                                <td>{$vo.username}</td>
+                                                <td>{$vo.email}</td>
+                                                <td>
+                                                    {if $vo.status == 1}普通管理员{else /}禁用{/if}
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="btn btn-azure btn-xs">Forbidden</a>
+                                                    <!--<a href="{:url('/admin/admin/edit',['id'=>$vo.id])}" class="btn btn-azure btn-xs">编辑</a>-->
+                                                </td>
+                                            </tr>
+                                        {/if}
+                                    {/if}
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Body -->
+        </div>
+        <!-- /Page Content -->
+
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>
+
+{include file="public/_js" /}
+<script>
+    $(function () {
+        $('.pagination').addClass('pagination-sm');
+
+        $('.admin-status').click(function () {
+            var id = $(this).attr('dataid');
+            var status = $(this).attr('statusid');
+            if (status == 1) {
+                var msg = '确定禁用吗？';
+            }else {
+                var msg = '确定启用吗？';
+            }
+            layer.confirm(msg, {
+                title:'状态操作',
+                icon:3
+            }, function (index) {
+                layer.close(index);
+                $.ajax({
+                    url:"{:url('admin/admin/adminstatus')}",
+                    type:'post',
+                    data:{id:id, status:status},
+                    dataType:'json',
+                    success:function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {
+                                icon:6,
+                                time:1000
+                            }, function () {
+                                location.href = data.url;
+                            });
+                        }else {
+                            layer.open({
+                                title:'操作失败',
+                                content:data.msg,
+                                icon:5,
+                                anim:6
+                            });
+                        }
+                    }
+                });
+            });
+            return false;
+        });
+
+        $('.delete').click(function () {
+            var id = $(this).attr('dataid');
+            layer.confirm('确定删除吗？', {
+                title:'删除管理员',
+                icon:3,
+                anim:6
+            }, function (index) {
+                layer.close(index);
+                $.ajax({
+                    url:"/admin/admin/delete",
+                    type:'post',
+                    data:{id:id},
+                    dataType:'json',
+                    success:function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {
+                                icon:6,
+                                time:1000
+                            }, function () {
+                                location.href = data.url;
+                            });
+                        }else {
+                            layer.open({
+                                title:'操作失败',
+                                content:data.msg,
+                                icon:5,
+                                anim:6
+                            });
+                        }
+                    }
+                });
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+<!--  /Body -->
+</html>

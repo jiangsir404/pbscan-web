@@ -1,0 +1,78 @@
+{extend name="./base_index" /}
+
+<!-- 功能网页的模版 -->
+{block name="modal"}
+{/block}
+
+{block name="fenye"}
+{/block}
+
+
+{block name="content"}
+
+<!-- 按钮点击事件  -->
+
+<div class="container">
+    <div class="row">
+        <!-- 表单 -->
+        <div class="col-md-7">
+            {block name="form"}
+            <form role="form">
+                <div class="form-group">
+                    <span class="help-block">{block name="span_text"}Struts2_045在线检测{/block}</span><!--span text继承-->
+                    <input class="form-control" type="text" name="content" id="content" placeholder="{block name="pla"}请输入URL http://thief.one{/block}">
+                </div>
+                {block name="form_button"} <!--form 按钮继承-->
+                <p> <span id="result"></span> </p>
+                <button class="btn btn-primary btn-bl" type="button" id='runing' data-loading-text="Loading加载中..." autocomplete="off" onclick="loag()">运行</button>
+
+                {/block}
+            </form>
+            {/block}
+        </div>
+
+        <!-- 帮助信息  -->
+        <div class="col-md-4 col-md-offset-1">
+            <span class="help-block">帮助信息栏</span>
+            <hr>
+            {block name="help"}{/block} <!--帮助信息继承-->
+        </div>
+    </div>
+</div>
+<br>
+
+
+<!-- ajax -->
+
+<script>
+    $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+</script>
+
+
+{block name="ajax"} <!--ajax继承-->
+<script>
+    $(document).ready(function(){
+        $("#runing").click(function(){
+            var content = $("#content").val();
+            var btn = $("#runing");
+
+            btn.button('loading');
+
+            $.post("{% url 'struts2_045_ajax' %}",{'content':content}, function(ret){
+                // document.getElementById('content').value = ret
+                $('#result').html(ret)
+
+                btn.button('reset');
+            });
+
+        });
+
+    });
+
+
+</script>
+{/block}
+
+{/block}
