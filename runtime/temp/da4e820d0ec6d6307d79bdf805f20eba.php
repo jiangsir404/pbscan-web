@@ -1,4 +1,4 @@
-<?php /*a:4:{s:80:"E:\Code\github\passivescan\pbscan_web\application\admin\view\result\history.html";i:1546932346;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_meta.html";i:1546932346;s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_nav.html";i:1546932346;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546932346;}*/ ?>
+<?php /*a:4:{s:80:"E:\Code\github\passivescan\pbscan_web\application\admin\view\result\history.html";i:1546936941;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_meta.html";i:1546932346;s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_nav.html";i:1546932346;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546932346;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -58,7 +58,7 @@
             <li><a href="<?php echo url('/admin/result/index'); ?>">漏洞管理</a></li>
             <li><a href="<?php echo url('/admin/result/history'); ?>">扫描历史</a></li>
         </ol>
-        <h2>漏洞管理</h2>
+        <h2>扫描历史</h2>
         <table class="table table-hover table-bordered">
             <caption><?php if($requests->count() > 0): ?>共计<?php echo htmlentities($requests->count()); ?>条<?php else: ?>无数据<?php endif; ?></caption>
             <thead>

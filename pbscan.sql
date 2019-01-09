@@ -90,6 +90,7 @@ CREATE TABLE `results` (
   `rid` varchar(40) NOT NULL,
   `token` varchar(40) DEFAULT NULL,
   `status` varchar(20) DEFAULT 'not scan',
+  `hide` tinyint DEFAULT 0,
   `request_num` smallint(6) DEFAULT '0',
   `issues_num` tinyint(4) DEFAULT '0',
   `insert_point` tinyint(4) DEFAULT '0',

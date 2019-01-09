@@ -1,4 +1,4 @@
-<?php /*a:5:{s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\result\index.html";i:1546932346;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_meta.html";i:1546932346;s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_nav.html";i:1546932346;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546932346;s:80:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_footer.html";i:1546932346;}*/ ?>
+<?php /*a:5:{s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\result\index.html";i:1546936377;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_meta.html";i:1546932346;s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_nav.html";i:1546932346;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546932346;s:80:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_footer.html";i:1546932346;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -55,8 +55,8 @@
 <div class="container">
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="<?php echo url('/admin/result/index'); ?>">漏洞管理</a></li>
-            <li><a href="<?php echo url('/admin/result/history'); ?>">扫描历史</a></li>
+            <li><a href="<?php echo url('/admin/result/index'); ?>">漏洞列表</a></li>
+            <li><a href="<?php echo url('/admin/result/index?hide=1'); ?>">已修复漏洞</a></li>
         </ol>
             <h2>漏洞列表</h2>
             <table class="table table-bordered table-hover table-striped">
@@ -83,7 +83,8 @@
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['issues_num']); ?></td>
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['insert_point']); ?></td>
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo htmlentities($vo['scanTime']); ?></td>
-                    <td><a href="/admin/result/delete?rid=<?php echo htmlentities($vo['rid']); ?>" data-id="<?php echo htmlentities($vo['rid']); ?>" data-file="<?php echo htmlentities($vo['saveFile']); ?>">删除</a></td>
+                    <td><a href="/admin/result/delete?rid=<?php echo htmlentities($vo['rid']); ?>" data-id="<?php echo htmlentities($vo['rid']); ?>" data-file="<?php echo htmlentities($vo['saveFile']); ?>">删除</a>&nbsp
+                        <a href="/admin/result/hide?rid=<?php echo htmlentities($vo['rid']); ?>">标为修复</a></td>
                 </tr>
 
                 <?php endif; ?>
@@ -134,7 +135,7 @@
                 </p>\
                 <p>\
                     <b><span>漏洞报表：</span></b>\
-                    <span>'+saveFile+'</span>\
+                    <span><a href="'+saveFile+'" target="_blank">'+saveFile+'</a></span>\
                 </p>';
                     results = JSON.parse(data);
                     for(i in results){
