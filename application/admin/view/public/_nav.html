@@ -27,8 +27,8 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{:url('admin/home/index')}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li><a href="{:url('admin/result/index')}"><span class="glyphicon glyphicon-eye-open"></span> 漏洞管理</a></li>
-                <li><a href="{:url('admin/result/history')}"><span class="glyphicon glyphicon-globe"></span> 扫描历史</a></li>
+                <li><a href="{:url('admin/result/index')}"><span class="glyphicon glyphicon-eye-open"></span> 漏洞管理 <span class="label label-danger">{$result_count}</span></a></li>
+                <li><a href="{:url('admin/result/history')}"><span class="glyphicon glyphicon-globe"></span> 扫描历史 <span class="label label-success">{$scan_count}</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> {:session('admin.username')}</a></li>

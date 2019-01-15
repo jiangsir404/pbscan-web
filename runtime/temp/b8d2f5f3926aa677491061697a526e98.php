@@ -1,4 +1,4 @@
-<?php /*a:5:{s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\home\index.html";i:1546932346;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_meta.html";i:1546932346;s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_nav.html";i:1547460882;s:80:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_footer.html";i:1546932346;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546932346;}*/ ?>
+<?php /*a:5:{s:88:"/mnt/hgfs/File/Code/github/passivescan/pbscan_web/application/admin/view/home/index.html";i:1546932346;s:90:"/mnt/hgfs/File/Code/github/passivescan/pbscan_web/application/admin/view/public/_meta.html";i:1546932346;s:89:"/mnt/hgfs/File/Code/github/passivescan/pbscan_web/application/admin/view/public/_nav.html";i:1546932346;s:92:"/mnt/hgfs/File/Code/github/passivescan/pbscan_web/application/admin/view/public/_footer.html";i:1546932346;s:88:"/mnt/hgfs/File/Code/github/passivescan/pbscan_web/application/admin/view/public/_js.html";i:1546932346;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -40,8 +40,8 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="<?php echo url('admin/home/index'); ?>"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li><a href="<?php echo url('admin/result/index'); ?>"><span class="glyphicon glyphicon-eye-open"></span> 漏洞管理 <span class="label label-danger"><?php echo htmlentities($result_count); ?></span></a></li>
-                <li><a href="<?php echo url('admin/result/history'); ?>"><span class="glyphicon glyphicon-globe"></span> 扫描历史 <span class="label label-success"><?php echo htmlentities($scan_count); ?></span></a></li>
+                <li><a href="<?php echo url('admin/result/index'); ?>"><span class="glyphicon glyphicon-eye-open"></span> 漏洞管理</a></li>
+                <li><a href="<?php echo url('admin/result/history'); ?>"><span class="glyphicon glyphicon-globe"></span> 扫描历史</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> <?php echo session('admin.username'); ?></a></li>

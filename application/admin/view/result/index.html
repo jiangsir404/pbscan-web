@@ -9,12 +9,15 @@
         </ol>
             <h2>漏洞列表</h2>
             <table class="table table-bordered table-hover table-striped">
-                <caption>{if condition="$results->count() gt 0"}共计{$results->count()}条{else /}无数据{/if}</caption>
+                <div class="pull-left">{if condition="$results->count() gt 0"}共计{$results->count()}条{else /}无数据{/if}</div>
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>漏洞url</th>
-                    <th>状态</th>
+                    <th><span class="label label-danger">H</span>
+                        <span class="label label-warning">M</span>
+                         <span class="label label-primary">L</span>
+                        <span class="label label-success">I</span></th>
                     <th>发包数</th>
                     <th>漏洞数</th>
                     <th>污染点</th>
@@ -27,8 +30,8 @@
                 {if session('admin.token') == $vo.token}
                 <tr>
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.id}</td>
-                    <td  data-toggle="modal" data-target=".bs-example-modal-lg" width="30px">{$vo.scanUrl}</td>
-                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.status}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg" style="word-wrap:break-word;word-break:break-all;table-layout:fixed; word-wrap: break-word; max-width:600px">{$vo.scanUrl}</td>
+                    <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.issueList|raw}</td>
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.request_num}</td>
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.issues_num}</td>
                     <td  data-toggle="modal" data-target=".bs-example-modal-lg">{$vo.insert_point}</td>
@@ -71,9 +74,9 @@
 <script>
     $("tbody tr td:not(:last)").click(function(){
         var rid = $(this).parent().find("td:last a").attr("data-id");
-        var saveFile = $(this).parent().find("td:last a").attr("data-file");
+        var saveFile = 'http://10.16.45.88:7002/'+$(this).parent().find("td:last a").attr("data-file");
         $.ajax({
-            url:'http://localhost:84/admin/result/issue?rid='+rid,
+            url:"{:url('/admin/result/issue?rid=')}"+rid,
             dataType:'json',
             success:function(data,status){
                 if(status == "success"){

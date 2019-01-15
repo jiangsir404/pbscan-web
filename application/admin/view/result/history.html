@@ -15,7 +15,7 @@
                 <th>ID</th>
                 <th>url</th>
                 <th>scan_burp</th>
-                <th>result_burp</th>
+                <th>scan_poc</th>
                 <th>update_time</th>
             </tr>
             </thead>
@@ -25,9 +25,9 @@
             {if session('admin.token') == $vo.token}
             <tr>
                 <td>{$vo.id}</td>
-                <td width="100px">{$vo.method}  {$vo.host}:{$vo.port}{$vo.path}</td>
+                <td style="word-wrap:break-word;word-break:break-all;table-layout:fixed; word-wrap: break-word; max-width:600px">{$vo.method}  {$vo.host}:{$vo.port}{$vo.path}</td>
                 <td>{$vo.scan_burp}</td>
-                <td>{$vo.result_burp}</td>
+                <td>{$vo.scan_poc}</td>
                 <td>{$vo.update_time}</td>
             </tr>
             {/if}

@@ -1,4 +1,4 @@
-<?php /*a:5:{s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\home\index.html";i:1546932346;s:78:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_meta.html";i:1546932346;s:77:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_nav.html";i:1547460882;s:80:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_footer.html";i:1546932346;s:76:"E:\Code\github\passivescan\pbscan_web\application\admin\view\public\_js.html";i:1546932346;}*/ ?>
+<?php /*a:4:{s:89:"/mnt/hgfs/E/Code/github/passivescan/pbscan_web/application/admin/view/result/history.html";i:1547460530;s:87:"/mnt/hgfs/E/Code/github/passivescan/pbscan_web/application/admin/view/public/_meta.html";i:1546932346;s:86:"/mnt/hgfs/E/Code/github/passivescan/pbscan_web/application/admin/view/public/_nav.html";i:1547460882;s:85:"/mnt/hgfs/E/Code/github/passivescan/pbscan_web/application/admin/view/public/_js.html";i:1546932346;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -51,44 +51,47 @@
     </div>
 </nav>
 
-<!-- /Navbar -->
-<!-- Main Container -->
 
-<div class="container admin-body">
+<div class="container">
     <div class="row">
-            <div class="content col-xs-8 col-xs-offset-2">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                        <tr>
-                            <th colspan="2">基本信息</th>
-                        </tr>
-                        </thead>
-                        <tbody>、
-                        <tr>
-                            <td>我的token</td>
-                            <td><?php echo htmlentities($token); ?></td>
-                        </tr>
-                        <tr>
-                            <td>服务器域名</td>
-                            <td><?php echo htmlentities(app('request')->domain()); ?></td>
-                        </tr>
-                        <tr>
-                            <td>服务器IP地址</td>
-                            <td><?php echo htmlentities(app('request')->ip()); ?></td>
-                        </tr>
-                        <tr>
-                            <td>服务器端口</td>
-                            <td><?php echo htmlentities(app('request')->port()); ?></td>
-                        </tr>
-                        </tbody>
-                    </table>
-            </div>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo url('/admin/result/index'); ?>">漏洞管理</a></li>
+            <li><a href="<?php echo url('/admin/result/history'); ?>">扫描历史</a></li>
+        </ol>
+        <h2>扫描历史</h2>
+        <table class="table table-hover table-bordered">
+            <caption><?php if($requests->count() > 0): ?>共计<?php echo htmlentities($requests->count()); ?>条<?php else: ?>无数据<?php endif; ?></caption>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>url</th>
+                <th>scan_burp</th>
+                <th>scan_poc</th>
+                <th>update_time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if(is_array($requests) || $requests instanceof \think\Collection || $requests instanceof \think\Paginator): $i = 0; $__LIST__ = $requests;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(session('admin.token') == $vo['token']): ?>
+            <tr>
+                <td><?php echo htmlentities($vo['id']); ?></td>
+                <td style="word-wrap:break-word;word-break:break-all;table-layout:fixed; word-wrap: break-word; max-width:600px"><?php echo htmlentities($vo['method']); ?>  <?php echo htmlentities($vo['host']); ?>:<?php echo htmlentities($vo['port']); ?><?php echo htmlentities($vo['path']); ?></td>
+                <td><?php echo htmlentities($vo['scan_burp']); ?></td>
+                <td><?php echo htmlentities($vo['scan_poc']); ?></td>
+                <td><?php echo htmlentities($vo['update_time']); ?></td>
+            </tr>
+            <?php endif; ?>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
+            </tbody>
+        </table>
+        <nav>
+            <?php echo $requests->render(); ?>
+        </nav>
     </div>
 </div>
 
-
-
 <script src="/static/admin/js/jquery-3.3.1.min.js"></script>
 <script src="/static/admin/js/bootstrap.min.js"></script>
+
 </body>
+<!--  /Body -->
 </html>

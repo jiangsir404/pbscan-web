@@ -14,7 +14,7 @@ CREATE TABLE `issues` (
   `issueSeverity` varchar(20) DEFAULT NULL,
   `issueConfidence` varchar(20) DEFAULT NULL,
   `issueDetail` varchar(2000) DEFAULT NULL,
-  `issueUrl` varchar(500) DEFAULT NULL,
+  `issueUrl` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8;
 
